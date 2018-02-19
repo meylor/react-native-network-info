@@ -61,17 +61,6 @@ RCT_EXPORT_METHOD(getBSSID:(RCTResponseSenderBlock)callback)
     callback(@[BSSID]);
 }
 
-// single callback arg, gets passed to
-/* 
-RCT_EXPORT_METHOD(getIPAddress:
-		callback(RCTResponseSenderBlock)callback)
-{
-    NSString *address = getIPAddress(@"en0")
-    callback(@[address]);
-}
-*/
-
-// interface arg
 RCT_EXPORT_METHOD(getIPAddress:
 		(NSString *)interface
 		callback(RCTResponseSenderBlock)callback)
