@@ -12,8 +12,9 @@ const NetworkInfo = {
     RNNetworkInfo.getBSSID(bssid);
   },
 
-  getIPAddress(ip) {
-    RNNetworkInfo.getIPAddress(ip);
+  getIPAddress(ip, _interface) {
+    _interface = typeof _interface !== 'undefined' ? _interface : "en0";
+    RNNetworkInfo.getIPAddress(ip, _interface);
   },
 
   getIPV4Address(ip) {

@@ -61,9 +61,22 @@ RCT_EXPORT_METHOD(getBSSID:(RCTResponseSenderBlock)callback)
     callback(@[BSSID]);
 }
 
-RCT_EXPORT_METHOD(getIPAddress:(RCTResponseSenderBlock)callback)
+// single callback arg, gets passed to
+/* 
+RCT_EXPORT_METHOD(getIPAddress:
+		callback(RCTResponseSenderBlock)callback)
 {
-    NSString *address = @"error";
+    NSString *address = getIPAddress(@"en0")
+    callback(@[address]);
+}
+*/
+
+// interface arg
+RCT_EXPORT_METHOD(getIPAddress:
+		(NSString *)interface
+		callback(RCTResponseSenderBlock)callback)
+{
+    NSString *address = @"error"; 
 
     struct ifaddrs *interfaces = NULL;
     struct ifaddrs *temp_addr = NULL;
@@ -75,7 +88,7 @@ RCT_EXPORT_METHOD(getIPAddress:(RCTResponseSenderBlock)callback)
         temp_addr = interfaces;
         while(temp_addr != NULL) {
             if(temp_addr->ifa_addr->sa_family == AF_INET) {
-                if([[NSString stringWithUTF8String:temp_addr->ifa_name] isEqualToString:@"en0"]) {
+                if([[NSString stringWithUTF8String:temp_addr->ifa_name] isEqualToString:interface]) {
                     address = [NSString stringWithUTF8String:inet_ntoa(((struct sockaddr_in *)temp_addr->ifa_addr)->sin_addr)];
                 }
             }
